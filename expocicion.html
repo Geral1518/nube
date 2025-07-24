@@ -1,0 +1,1029 @@
+CONTINUA LA CODIFICACION: <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modelos de Servicios en la Nube | Guía Profesional</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #10b981;
+            --secondary-dark: #0d9488;
+            --tertiary: #ef4444;
+            --tertiary-dark: #dc2626;
+            --dark: #1e293b;
+            --darker: #0f172a;
+            --light: #f8fafc;
+            --light-gray: #e2e8f0;
+            --gray: #94a3b8;
+            --dark-gray: #64748b;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            
+            --rounded-sm: 0.125rem;
+            --rounded: 0.25rem;
+            --rounded-md: 0.375rem;
+            --rounded-lg: 0.5rem;
+            --rounded-xl: 0.75rem;
+            --rounded-2xl: 1rem;
+            --rounded-full: 9999px;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Open Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        
+        .slide {
+            width: 100vw;
+            min-height: 100vh;
+            padding: 2rem;
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+            background-color: var(--light);
+        }
+        
+        .slide.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0.8; }
+            to { opacity: 1; }
+        }
+        
+        /* Header Styles */
+        .header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: var(--rounded-xl);
+            margin-bottom: 2.5rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            pointer-events: none;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Section Styles */
+        section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        h2 {
+            color: var(--primary);
+            font-size: 1.75rem;
+            margin: 2rem 0 1.5rem;
+            position: relative;
+            padding-bottom: 0.75rem;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+        
+        h3 {
+            color: var(--secondary-dark);
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem;
+        }
+        
+        h4 {
+            color: var(--dark);
+            font-size: 1.25rem;
+            margin: 1.25rem 0 0.75rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            color: var(--darker);
+        }
+        
+        strong {
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
+        /* Model Cards */
+        .model-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .model-card {
+            background: white;
+            border-radius: var(--rounded-xl);
+            padding: 1.75rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-top: 4px solid;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .model-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .model-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: currentColor;
+        }
+        
+        .model-card.iaas {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .model-card.paas {
+            border-color: var(--secondary);
+            color: var(--secondary);
+        }
+        
+        .model-card.saas {
+            border-color: var(--tertiary);
+            color: var(--tertiary);
+        }
+        
+        .model-card img {
+            width: 100%;
+            max-height: 120px;
+            object-fit: contain;
+            margin-bottom: 1.5rem;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Lists */
+        ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.25rem;
+        }
+        
+        li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            box-shadow: var(--shadow);
+            border-radius: var(--rounded-lg);
+            overflow: hidden;
+        }
+        
+        th, td {
+            padding: 1rem 1.25rem;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 0.5px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: var(--light);
+        }
+        
+        tr:hover {
+            background-color: rgba(37, 99, 235, 0.05);
+        }
+        
+        /* Example Grid */
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .example-item {
+            background: white;
+            padding: 1.25rem 0.75rem;
+            border-radius: var(--rounded-lg);
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+        }
+        
+        .example-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .example-item img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            margin: 0 auto 0.75rem;
+            display: block;
+            filter: grayscale(30%);
+            transition: filter 0.3s ease;
+        }
+        
+        .example-item:hover img {
+            filter: grayscale(0%);
+        }
+        
+        .example-item div {
+            font-size: 0.875rem;
+            color: var(--dark-gray);
+            font-weight: 500;
+        }
+        
+        /* Phases */
+        .phase {
+            display: flex;
+            margin-bottom: 1.5rem;
+            background: white;
+            border-radius: var(--rounded-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+        
+        .phase:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .phase-number {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.25rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 60px;
+        }
+        
+        .phase-content {
+            padding: 1.25rem;
+            flex-grow: 1;
+        }
+        
+        /* Benefits */
+        .benefits-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--rounded-lg);
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--secondary);
+            transition: all 0.3s ease;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .benefit-card h3 {
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 0.75rem;
+            font-size: 1.25rem;
+        }
+        
+        /* Case Study */
+        .case-study {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--rounded-xl);
+            box-shadow: var(--shadow-lg);
+            margin: 2.5rem 0;
+            border-left: 5px solid var(--primary);
+        }
+        
+        .case-study h3 {
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .case-study-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .case-study-item {
+            background: var(--light);
+            padding: 1.25rem;
+            border-radius: var(--rounded-lg);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .case-study-item h4 {
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 0.75rem;
+            font-size: 1.125rem;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Navigation */
+        .nav-buttons {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            display: flex;
+            gap: 0.75rem;
+            z-index: 100;
+        }
+        
+        .nav-button {
+            padding: 0.75rem 1.25rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--rounded-full);
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+            box-shadow: var(--shadow-md);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .nav-button:active {
+            transform: translateY(0);
+        }
+        
+        /* Progress indicator */
+        .progress-container {
+            position: fixed;
+            bottom: 5rem;
+            right: 1.5rem;
+            background: white;
+            padding: 0.5rem 0.75rem;
+            border-radius: var(--rounded-full);
+            box-shadow: var(--shadow);
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--dark);
+            z-index: 100;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 2rem 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            section {
+                padding: 0.5rem;
+            }
+            
+            .model-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .benefits-container, .case-study-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-buttons {
+                bottom: 1rem;
+                right: 1rem;
+            }
+            
+            .nav-button {
+                padding: 0.6rem 1rem;
+                font-size: 0.875rem;
+            }
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Slide 1: Portada -->
+    <div class="slide active" id="slide1">
+        <div class="header">
+            <h1>Modelos de Servicios en la Nube</h1>
+            <p> IaaS, PaaS y SaaS</p>
+        </div>
+    </div>
+    
+    <!-- Slide 2: Introducción -->
+    <div class="slide" id="slide2">
+        <section>
+            <h2>Introducción:</h2>
+            <p>Los servicios en la nube se dividen en tres modelos principales según el nivel de control y responsabilidad del cliente. Cada modelo ofrece diferentes niveles de abstracción de la infraestructura subyacente, proporcionando flexibilidad y opciones para diversas necesidades empresariales.</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Modelo</th>
+                        <th>Significado</th>
+                        <th>¿Qué ofrece?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>IaaS</strong></td>
+                        <td>Infraestructura como Servicio</td>
+                        <td>Recursos básicos como servidores, redes, almacenamiento</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PaaS</strong></td>
+                        <td>Plataforma como Servicio</td>
+                        <td>Entorno de desarrollo con herramientas y servicios de middleware</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SaaS</strong></td>
+                        <td>Software como Servicio</td>
+                        <td>Aplicaciones completas listas para usar</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+    
+    <!-- Slide 3: IaaS -->
+    <div class="slide" id="slide3">
+        <section>
+            <h2>IaaS – Infraestructura como Servicio</h2>
+            <div class="model-card iaas">
+                <img src="https://cdn-icons-png.flaticon.com/512/2906/2906274.png" alt="IaaS" class="floating">
+                
+                <h4>Características:</h4>
+                <ul>
+                    <li>Proporciona servidores virtuales, almacenamiento, redes y sistemas operativos</li>
+                    <li>El usuario gestiona el software, las aplicaciones, los datos, y algunos aspectos de la red</li>
+                    <li>Es escalable bajo demanda</li>
+                </ul>
+                
+                <h4>Ventajas:</h4>
+                <ul>
+                    <li><strong>Flexibilidad:</strong> Elección del sistema operativo y middleware</li>
+                    <li><strong>Escalabilidad:</strong> Agrega recursos fácilmente según necesidad</li>
+                    <li><strong>Costos bajos:</strong> No hay gastos en hardware físico</li>
+                    <li><strong>Control completo</strong> del entorno de TI</li>
+                </ul>
+                
+                <h4>Ejemplos:</h4>
+                <div class="example-grid">
+                    <div class="example-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/873/873107.png" alt="AWS">
+                        <div>Amazon EC2</div>
+                    </div>
+                    <div class="example-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/732/732226.png" alt="Azure">
+                        <div>Azure VMs</div>
+                    </div>
+                    <div class="example-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/281/281760.png" alt="Google Cloud">
+                        <div>Google Compute</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Slide 4: PaaS -->
+    <div class="slide" id="slide4">
+        <section>
+            <h2>PaaS – Plataforma como Servicio</h2>
+            <div class="model-card paas">
+                <img src="https://cdn-icons-png.flaticon.com/512/1086/1086741.png" alt="PaaS" class="floating">
+                
+                <h4>Características:</h4>
+                <ul>
+                    <li>Proporciona herramientas de desarrollo, bases de datos, middleware, y servicios de despliegue</li>
+                    <li>El proveedor gestiona la infraestructura subyacente</li>
+                    <li>Ideal para desarrolladores y equipos DevOps</li>
+                </ul>
+                
+                <h4>Ventajas:</h4>
+                <ul>
+                    <li><strong>Acelera el desarrollo</strong> de aplicaciones</li>
+                    <li><strong>Automatiza el mantenimiento</strong> del sistema</li>
+                    <li><strong>Colaboración</strong> entre equipos de desarrollo</li>
+                    <li><strong>Sin preocuparse por hardware ni software base</strong></li>
+                </ul>
+                
+                <h4>Ejemplos:</h4>
+                <div class="example-grid">
+                    <div class="example-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/281/281760.png" alt="Google Cloud">
+                        <div>App Engine</div>
+                    </div>
+                    <div class="example-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/873/873107.png" alt="Heroku">
+                        <div>Heroku</div>
+                    </div>
+                    <div class="example-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/732/732226.png" alt="Azure">
+                        <div>Azure Apps</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Slide 5: SaaS -->
+    <div class="slide" id="slide5">
+        <section>
+            <h2>SaaS – Software como Servicio</h2>
+            <div class="model-card saas">
+                <img src="https://cdn-icons-png.flaticon.com/512/2933/2933245.png" alt="SaaS" class="floating">
+                
+                <h4>Características:</h4>
+                <ul>
+                    <li>Aplicaciones completamente funcionales y listas para usar</li>
+                    <li>Acceso desde navegador o app, sin instalación local</li>
+                    <li>Multitenencia: una instancia para múltiples usuarios</li>
+                </ul>
+                
+                <h4>Ventajas:</h4>
+                <ul>
+                    <li><strong>Cero mantenimiento</strong> para el usuario final</li>
+                    <li><strong>Acceso desde cualquier lugar</strong> con internet</li>
+                    <li><strong>Actualizaciones automáticas</strong> y escalabilidad</li>
+                    <li>Ideal para funciones empresariales estándar (CRM, ERP, correo, etc.)</li>
+                </ul>
+                
+                <h4>Ejemplos:</h4>
+                <div class="example-grid">
+                    <div class="example-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/281/281760.png" alt="Google">
+                        <div>Google Workspace</div>
+                    </div>
+                    <div class="example-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/732/732226.png" alt="Microsoft">
+                        <div>Microsoft 365</div>
+                    </div>
+                    <div class="example-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/281/281769.png" alt="Salesforce">
+                        <div>Salesforce</div>
+                    </div>
+                    <div class="example-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Zoom">
+                        <div>Zoom</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Slide 6: Migración Fases 1-3 -->
+    <div class="slide" id="slide6">
+        <section>
+            <h2>Migración de Infraestructura Local a la Nube</h2>
+            
+            <h3>Escenario inicial:</h3>
+            <p>Entidad con servidores físicos, almacenamiento local, aplicaciones internas, respaldos en sitio.</p>
+            
+            <h3>Fases del proceso de migración:</h3>
+            
+            <div class="phase">
+                <div class="phase-number">1</div>
+                <div class="phase-content">
+                    <h4>Evaluación y planificación</h4>
+                    <ul>
+                        <li>Identificar activos TI actuales: servidores, bases de datos, aplicaciones</li>
+                        <li>Evaluar qué servicios pueden moverse (total o parcialmente)</li>
+                        <li>Seleccionar modelo de nube (IaaS, PaaS, SaaS o híbrido)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="phase">
+                <div class="phase-number">2</div>
+                <div class="phase-content">
+                    <h4>Elección del proveedor</h4>
+                    <ul>
+                        <li>AWS, Microsoft Azure, Google Cloud, IBM Cloud, Oracle Cloud, entre otros</li>
+                        <li>Considerar cumplimiento normativo, costos, soporte</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="phase">
+                <div class="phase-number">3</div>
+                <div class="phase-content">
+                    <h4>Diseño de arquitectura en la nube</h4>
+                    <ul>
+                        <li>Rediseñar topología en la nube: redes virtuales, seguridad, balanceadores</li>
+                        <li>Plan de respaldo y recuperación</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Slide 7: Migración Fases 4-6 -->
+    <div class="slide" id="slide7">
+        <section>
+            <div class="phase">
+                <div class="phase-number">4</div>
+                <div class="phase-content">
+                    <h4>Migración</h4>
+                    <ul>
+                        <li>Migración de máquinas virtuales (IaaS)</li>
+                        <li>Adaptación/reprogramación de aplicaciones (PaaS)</li>
+                        <li>Sustitución de aplicaciones propias por SaaS</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="phase">
+                <div class="phase-number">5</div>
+                <div class="phase-content">
+                    <h4>Pruebas y validación</h4>
+                    <ul>
+                        <li>Verificar que todo funcione correctamente: rendimiento, seguridad, disponibilidad</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="phase">
+                <div class="phase-number">6</div>
+                <div class="phase-content">
+                    <h4>Optimización y monitoreo</h4>
+                    <ul>
+                        <li>Implementar herramientas de monitoreo</li>
+                        <li>Ajustar escalabilidad y políticas de costo</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Slide 8: Ejemplo de Aplicación -->
+    <div class="slide" id="slide8">
+        <section>
+            <h2>Ejemplo de Aplicación en una Entidad</h2>
+            <p><strong>Entidad:</strong> Universidad / Empresa Pública / PYME</p>
+            
+            <div class="model-card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Infraestructura Local</th>
+                            <th>Equivalente en la Nube</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Servidor de correo</td>
+                            <td>Microsoft 365 (SaaS)</td>
+                        </tr>
+                        <tr>
+                            <td>Base de datos</td>
+                            <td>Azure SQL o Amazon RDS (PaaS)</td>
+                        </tr>
+                        <tr>
+                            <td>Aplicación interna desarrollada en Java</td>
+                            <td>Desplegada en Google App Engine (PaaS)</td>
+                        </tr>
+                        <tr>
+                            <td>Servidores físicos</td>
+                            <td>Máquinas virtuales EC2 (IaaS)</td>
+                        </tr>
+                        <tr>
+                            <td>Respaldos en disco externo</td>
+                            <td>Amazon S3 (IaaS)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <!-- Slide 9: Caso de Estudio Real -->
+    <div class="slide" id="slide9">
+        <section>
+            <h2>Caso de Estudio Real: Netflix</h2>
+            
+            <div class="case-study">
+                <h3>Migración completa a la nube de AWS</h3>
+                <p>Netflix completó su migración a AWS en 2016 después de 7 años de trabajo, convirtiéndose en uno de los casos más emblemáticos de migración cloud.</p>
+                
+                <div class="case-study-grid">
+                    <div class="case-study-item">
+                        <h4>Antes de la migración</h4>
+                        <ul>
+                            <li>Infraestructura física propia</li>
+                            <li>Centros de datos tradicionales</li>
+                            <li>Problemas de escalabilidad</li>
+                            <li>Alto costo de mantenimiento</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="case-study-item">
+                        <h4>Después de la migración</h4>
+                        <ul>
+                            <li>100% en AWS (principalmente IaaS)</li>
+                            <li>Más de 100,000 instancias EC2</li>
+                            <li>Escalabilidad automática</li>
+                            <li>Alta disponibilidad global</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="case-study-item">
+                        <h4>Beneficios obtenidos</h4>
+                        <ul>
+                            <li>Reducción de 50% en costos de infraestructura</li>
+                            <li>Tiempo de despliegue reducido de semanas a minutos</li>
+                            <li>Capacidad para manejar picos de tráfico masivos</li>
+                            <li>Innovación más rápida con microservicios</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h4>Arquitectura actual en AWS:</h4>
+                <div class="example-grid">
+                    <div class="example-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/873/873107.png" alt="EC2">
+                        <div>EC2 (Computación)</div>
+                    </div>
+                    <div class="example-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2965/2965300.png" alt="S3">
+                        <div>S3 (Almacenamiento)</div>
+                    </div>
+                    <div class="example-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2965/2965278.png" alt="RDS">
+                        <div>DynamoDB (Bases de datos)</div>
+                    </div>
+                    <div class="example-item">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2965/2965275.png" alt="CDN">
+                        <div>CloudFront (CDN)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Slide 10: Beneficios Clave -->
+    <div class="slide" id="slide10">
+        <section>
+            <h2>Beneficios clave de la migración</h2>
+            
+            <div class="benefits-container">
+                <div class="benefit-card">
+                    <h3>Reducción de costos</h3>
+                    <p>Eliminación de gastos en hardware físico y mantenimiento de infraestructura local.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <h3>Alta disponibilidad</h3>
+                    <p>Servicios accesibles desde cualquier lugar con conexión a internet, con tiempos de actividad garantizados.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <h3>Escalabilidad</h3>
+                    <p>Capacidad de aumentar o reducir recursos según demanda, sin inversión inicial.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <h3>Seguridad mejorada</h3>
+                    <p>Proveedores de nube ofrecen medidas de seguridad avanzadas y cumplimiento normativo.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <h3>Recuperación ante desastres</h3>
+                    <p>Soluciones robustas de backup y recuperación de datos incluidos en los servicios.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <h3>Innovación acelerada</h3>
+                    <p>Acceso a las últimas tecnologías y actualizaciones automáticas.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Slide 11: Cierre -->
+    <div class="slide" id="slide11">
+        <footer>
+            <p>Pacco Mejía Geraldine Pilar</p>
+        </footer>
+    </div>
+    
+    <!-- Navigation buttons -->
+    <div class="nav-buttons">
+        <button class="nav-button" id="prevBtn">← Anterior</button>
+        <button class="nav-button" id="nextBtn">Siguiente →</button>
+    </div>
+    
+    <div class="progress-container" id="progressIndicator">
+        <span id="currentSlide">1</span> / <span id="totalSlides">11</span>
+    </div>
+    
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 11;
+        
+        function updateProgressIndicator() {
+            document.getElementById('currentSlide').textContent = currentSlide;
+            document.getElementById('totalSlides').textContent = totalSlides;
+        }
+        
+        function showSlide(n) {
+            // Hide all slides
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            // Show the selected slide
+            document.getElementById(`slide${n}`).classList.add('active');
+            currentSlide = n;
+            updateProgressIndicator();
+            
+            // Scroll to top of slide
+            window.scrollTo(0, 0);
+        }
+        
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                showSlide(currentSlide + 1);
+            }
+        }
+        
+        function prevSlide() {
+            if (currentSlide > 1) {
+                showSlide(currentSlide - 1);
+            }
+        }
+        
+        // Event listeners for buttons
+        document.getElementById('nextBtn').addEventListener('click', nextSlide);
+        document.getElementById('prevBtn').addEventListener('click', prevSlide);
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+        
+        // Swipe for touch devices
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        document.addEventListener('touchstart', function(e
+) {
+touchStartX = e.changedTouches[0].screenX;
+}, false);document.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, false);
+    
+    function handleSwipe() {
+        const threshold = 50; // Minimum swipe distance
+        
+        if (touchEndX < touchStartX - threshold) {
+            // Swipe left - next slide
+            nextSlide();
+        } else if (touchEndX > touchStartX + threshold) {
+            // Swipe right - previous slide
+            prevSlide();
+        }
+    }
+    
+    // Initialize
+    showSlide(1);
+    updateProgressIndicator();
+</script></body> </html>
